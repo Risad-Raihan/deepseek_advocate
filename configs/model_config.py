@@ -357,4 +357,16 @@ class ModelConfig:
             validation_results["errors"].append("Embedding dimension must be positive")
             validation_results["valid"] = False
         
-        return validation_results 
+        return validation_results
+
+# Export configuration variables for easy import
+EMBEDDING_MODEL = ModelConfig.EMBEDDING_MODEL
+VECTOR_DB_PATH = str(ModelConfig.VECTOR_DB_DIR)
+LM_STUDIO_CONFIG = ModelConfig.LM_STUDIO_CONFIG
+PHASE2_CONFIG = ModelConfig.PHASE2_CONFIG
+TESTING_CONFIG = ModelConfig.TESTING_CONFIG
+SYSTEM_PROMPTS = ModelConfig.SYSTEM_PROMPTS
+BENGALI_CONFIG = ModelConfig.BENGALI_CONFIG
+RAG_CONFIG = ModelConfig.RAG_CONFIG
+RESPONSE_CONFIG = ModelConfig.RESPONSE_CONFIG
+LEGAL_DOMAIN_CONFIG = ModelConfig.LEGAL_DOMAIN_CONFIG 

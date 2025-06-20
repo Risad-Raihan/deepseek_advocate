@@ -13,21 +13,25 @@ import json
 # Add src to path
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'src'))
 
-from src.vector_store import VectorStore
-from src.bengali_processor import BengaliProcessor
-from src.query_processor import LegalQueryProcessor
+from src.vector_store import LegalVectorStore
+from src.bengali_processor import BengaliLegalProcessor
+from src.query_processor import BengaliLegalQueryProcessor
 from src.legal_rag import LegalRAGEngine
 from src.context_builder import LegalContextBuilder
 from src.response_generator import BengaliLegalResponseGenerator
 from configs.model_config import *
 
 def setup_logging():
-    """Setup comprehensive logging for Phase 2"""
+    """Setup comprehensive logging for Phase 2 with Unicode support"""
+    # Create logs directory if it doesn't exist
+    os.makedirs('logs', exist_ok=True)
+    
+    # Configure logging with UTF-8 encoding
     logging.basicConfig(
         level=logging.INFO,
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
         handlers=[
-            logging.FileHandler('logs/phase2_execution.log'),
+            logging.FileHandler('logs/phase2_execution.log', encoding='utf-8'),
             logging.StreamHandler()
         ]
     )
@@ -43,14 +47,14 @@ def check_lm_studio_availability():
         )
         if response.status_code == 200:
             models = response.json()
-            print("✅ LM Studio is running!")
+            print("LM Studio is running!")
             print(f"Available models: {[model.get('id', 'Unknown') for model in models.get('data', [])]}")
             return True
         else:
-            print(f"❌ LM Studio responded with status {response.status_code}")
+            print(f"LM Studio responded with status {response.status_code}")
             return False
     except Exception as e:
-        print(f"❌ Cannot connect to LM Studio: {e}")
+        print(f"Cannot connect to LM Studio: {e}")
         print("Please make sure LM Studio is running on http://localhost:1234")
         return False
 
@@ -61,7 +65,7 @@ def initialize_phase2_components(logger):
         
         # Initialize vector store (from Phase 1)
         logger.info("Loading vector store...")
-        vector_store = VectorStore(
+        vector_store = LegalVectorStore(
             embedding_model=EMBEDDING_MODEL,
             vector_db_path=VECTOR_DB_PATH
         )
@@ -73,11 +77,11 @@ def initialize_phase2_components(logger):
         
         # Initialize Bengali processor
         logger.info("Initializing Bengali processor...")
-        bengali_processor = BengaliProcessor()
+        bengali_processor = BengaliLegalProcessor()
         
-        # Initialize query processor
+        # Initialize query processor (no parameters needed)
         logger.info("Initializing query processor...")
-        query_processor = LegalQueryProcessor(bengali_processor)
+        query_processor = BengaliLegalQueryProcessor()
         
         # Initialize context builder
         logger.info("Initializing context builder...")
@@ -109,11 +113,11 @@ def initialize_phase2_components(logger):
             'rag_engine': rag_engine
         }
         
-        logger.info("✅ All Phase 2 components initialized successfully!")
+        logger.info("All Phase 2 components initialized successfully!")
         return components
         
     except Exception as e:
-        logger.error(f"❌ Error initializing Phase 2 components: {e}")
+        logger.error(f"Error initializing Phase 2 components: {e}")
         return None
 
 def test_phase2_system(components, logger):
