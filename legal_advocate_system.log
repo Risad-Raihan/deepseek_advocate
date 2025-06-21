@@ -1,0 +1,17 @@
+2025-06-20 20:27:49,840 - sentence_transformers.SentenceTransformer - INFO - Use pytorch device_name: cpu
+2025-06-20 20:27:49,841 - sentence_transformers.SentenceTransformer - INFO - Load pretrained SentenceTransformer: sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2
+2025-06-20 20:27:54,742 - huggingface_hub.file_download - WARNING - Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+2025-06-20 20:34:22,192 - huggingface_hub.file_download - WARNING - Xet Storage is enabled for this repo, but the 'hf_xet' package is not installed. Falling back to regular HTTP download. For better performance, install the package with: `pip install huggingface_hub[hf_xet]` or `pip install hf_xet`
+2025-06-20 20:34:30,019 - __main__ - INFO - Step 1: Processing Bengali legal PDFs...
+2025-06-20 20:34:30,019 - src.document_processor - INFO - Found 7 PDF files to process
+2025-06-20 20:35:55,347 - __main__ - INFO - Step 2: Creating multi-level FAISS indexes...
+2025-06-20 20:36:24,429 - src.vector_store - INFO - Created BM25 index for document level with 5 documents
+2025-06-20 20:36:24,445 - src.vector_store - INFO - Created BM25 index for section level with 5 documents
+2025-06-20 20:36:24,468 - src.vector_store - INFO - Created BM25 index for paragraph level with 703 documents
+2025-06-20 20:36:24,468 - src.vector_store - INFO - Created BM25 index for entity level with 2 documents
+2025-06-20 20:36:24,470 - src.vector_store - INFO - Saved document index with 5 vectors
+2025-06-20 20:36:24,471 - src.vector_store - INFO - Saved section index with 5 vectors
+2025-06-20 20:36:24,472 - src.vector_store - INFO - Saved paragraph index with 703 vectors
+2025-06-20 20:36:24,472 - src.vector_store - INFO - Saved entity index with 2 vectors
+2025-06-20 20:36:24,487 - src.vector_store - INFO - Created multi-level indexes: {'total_documents': 5, 'total_sections': 5, 'total_paragraphs': 703, 'total_entities': 2, 'index_sizes': {'document': 5, 'section': 5, 'paragraph': 703, 'entity': 2}}
+2025-06-20 20:36:24,489 - __main__ - INFO - Step 3: Testing retrieval system...
